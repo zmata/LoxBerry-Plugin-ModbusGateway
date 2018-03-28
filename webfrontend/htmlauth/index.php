@@ -27,7 +27,20 @@ LBWeb::lbheader($template_title, $helplink, $helptemplate);
 <p><?=$L['MAIN.USAGE2']?></p>
 <p></p>
 
+<p class="wide"><?=$L['RS485.HEAD']?></p>
+<p><?=$L['RS485.TEXT']?></p>
 
+<?php
+if ($handle = opendir('/dev/serial/by-id')) {
+    while (false !== ($entry = readdir($handle))) {
+        if ($entry != "." && $entry != "..") {
+            echo "$entry\n";
+        }
+    }
+    closedir($handle);
+}
+
+?>
 
 
 <?php
