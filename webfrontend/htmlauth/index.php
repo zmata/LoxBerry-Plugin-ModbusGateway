@@ -13,7 +13,7 @@ $navbar[1]['Name'] = $L['NAVBAR.FIRST'];
 $navbar[1]['URL'] = 'index.php';
 
 $navbar[2]['Name'] = $L['NAVBAR.SECOND'];
-$navbar[2]['URL'] = 'settings.php';
+//$navbar[2]['URL'] = 'settings.php';
 
 
 // Activate the first element
