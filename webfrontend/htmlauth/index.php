@@ -1,5 +1,4 @@
 <?php
-
 require_once "loxberry_system.php";
 require_once "loxberry_web.php";
 
@@ -22,7 +21,8 @@ $navbar[1]['active'] = True;
 LBWeb::lbheader($template_title, $helplink, $helptemplate);
 
 ?>
-<p><?=$L['MAIN.INTRO']?></p>
+<p><?=$L['MAIN.INTRO1']?></p>
+<p><?=$L['MAIN.INTRO2']?></p>
 <p><?=$L['MAIN.USAGE1']?></p>
 <p><?=$L['MAIN.USAGE2']?></p>
 <p></p>
