@@ -15,11 +15,12 @@ $navbar[2]['Name'] = $L['NAVBAR.SECOND'];
 //$navbar[2]['URL'] = 'settings.php';
 
 
-// Activate the first element
+// NAVBAR 
 $navbar[1]['active'] = True;
 
 LBWeb::lbheader($template_title, $helplink, $helptemplate);
 
+//MAIN
 ?>
 <p><?=$L['MAIN.INTRO1']?></p>
 <p><?=$L['MAIN.INTRO2']?></p>
@@ -27,6 +28,9 @@ LBWeb::lbheader($template_title, $helplink, $helptemplate);
 <p><?=$L['MAIN.USAGE2']?></p>
 <p></p>
 
+<?php
+//RS485
+?>
 <p class="wide"><?=$L['RS485.HEAD']?></p>
 <p><?=$L['RS485.TEXT']?></p>
 
@@ -40,7 +44,11 @@ if ($handle = opendir('/dev/serial/by-id')) {
     closedir($handle);
 }
 
+//GATEWAYS
 ?>
+<p class="wide"><?=$L['GATEWAYS.HEAD']?></p>
+<p><a href='new.php'><?=$L['GATEWAYS.NEW']?></a></p>
+
 
 
 <?php
