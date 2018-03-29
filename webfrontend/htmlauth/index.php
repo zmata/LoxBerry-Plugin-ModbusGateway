@@ -3,6 +3,16 @@ require_once "loxberry_system.php";
 require_once "loxberry_web.php";
 require_once "Config/Lite.php";
 
+function zmata_option_set($optval, $value) {
+  if ($value == $optval)
+    $option = '<option value="'. $optval. '" selected>'. $optval. '</option>';
+//    $option = '<option value="38400" selected>38400</option>';
+  else
+    $option = '<option value="'. $optval. '">'. $optval. '</option>';
+//    $option = '<option value="38400">38400</option>';
+  return $option;
+}
+
 $L = LBWeb::readlanguage("language.ini");
 
 $template_title = "Modbus Gateway";
@@ -44,7 +54,7 @@ if ($handle = opendir('/dev/serial/by-id')) {
     }
     closedir($handle);
 }
-
+    
 //GATEWAYS
 ?>
 <br>
@@ -54,7 +64,7 @@ if ($handle = opendir('/dev/serial/by-id')) {
 /*=$L['GATEWAYS.DEVICE']
 =$L['GATEWAYS.SPEED']
 =$L['GATEWAYS.MODE']
-=$L['GATEWAYS.CONTROL']
+=$L['GATEWAYS.TRX_CONTROL']
 =$L['GATEWAYS.PORT']
 =$L['GATEWAYS.MAXCONN']
 =$L['GATEWAYS.TIMEOUT']
@@ -68,13 +78,15 @@ if ($handle = opendir($lbpconfigdir)) {
         if ($entry != "." && $entry != "..") {
           // read cfg file
           $file = $lbpconfigdir. '/'. $entry;
+//          echo '<p>'. $file. '</p>';
           $cfg = new Config_Lite("$file");
           $device=$cfg->get(null,"device");
+          echo '<div>';
           echo '<p>'; ?> <?=$L['GATEWAYS.DEVICE']?> <?php echo ': '. $device. '</p>';
  
           $speed=$cfg->get(null,"speed");
           $mode=$cfg->get(null,"mode");
-          $control=$cfg->get(null,"control");
+          $trx_control=$cfg->get(null,"trx_control");
           $port=$cfg->get(null,"port");
           $maxconn=$cfg->get(null,"maxconn");
           $timeout=$cfg->get(null,"timeout");
@@ -82,6 +94,33 @@ if ($handle = opendir($lbpconfigdir)) {
           $pause=$cfg->get(null,"pause");
           $wait=$cfg->get(null,"wait");
           echo '<p>Parameters: '. $speed. ' '. $mode. ' '. $control. ' '. $port. ' '. $maxconn. ' '. $timeout. ' '. $retries. ' '. $pause. ' '. $wait. '</p>';
+?>
+          <form>
+              <label for="speed"><?=$L['GATEWAYS.SPEED']?></label>
+              <select name="speed" id="speed">
+            <?php echo zmata_option_set("1200", $speed);
+                  echo zmata_option_set("2400", $speed);
+                  echo zmata_option_set("4800", $speed);
+                  echo zmata_option_set("9600", $speed);
+                  echo zmata_option_set("19200", $speed);
+                  echo zmata_option_set("38400", $speed);
+                  echo zmata_option_set("57600", $speed);
+                  echo zmata_option_set("115200", $speed); ?>
+              </select>
+              <label for="mode"><?=$L['GATEWAYS.MODE']?></label>
+              <select name="mode" id="mode">
+            <?php echo zmata_option_set("8n1", $mode); ?>
+              </select>
+              <label for="trx_control"><?=$L['GATEWAYS.TRX_CONTROL']?></label>
+              <select name="trx_control" id="trx_control">
+            <?php echo zmata_option_set("addc", $trx_control); 
+                  echo zmata_option_set("rts", $trx_control); 
+                  echo zmata_option_set("sysfs_0", $trx_control); 
+                  echo zmata_option_set("sysfs_1", $trx_control); ?>
+              </select>
+          </form>
+<?php
+          echo '</div>';
         }
     }
     closedir($handle);
