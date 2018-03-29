@@ -1,6 +1,7 @@
 <?php
 require_once "loxberry_system.php";
 require_once "loxberry_web.php";
+require_once "Config/Lite.php";
 
 $L = LBWeb::readlanguage("language.ini");
 
@@ -15,7 +16,7 @@ $navbar[2]['Name'] = $L['NAVBAR.SECOND'];
 //$navbar[2]['URL'] = 'settings.php';
 
 
-// NAVBAR 
+// NAVBAR
 $navbar[1]['active'] = True;
 
 LBWeb::lbheader($template_title, $helplink, $helptemplate);
@@ -46,7 +47,48 @@ if ($handle = opendir('/dev/serial/by-id')) {
 
 //GATEWAYS
 ?>
+<br>
+<br>
 <p class="wide"><?=$L['GATEWAYS.HEAD']?></p>
+<?php
+/*=$L['GATEWAYS.DEVICE']
+=$L['GATEWAYS.SPEED']
+=$L['GATEWAYS.MODE']
+=$L['GATEWAYS.CONTROL']
+=$L['GATEWAYS.PORT']
+=$L['GATEWAYS.MAXCONN']
+=$L['GATEWAYS.TIMEOUT']
+=$L['GATEWAYS.RETRIES']
+=$L['GATEWAYS.PAUSE']
+=$L['GATEWAYS.WAIT'] */
+?>
+<?php
+if ($handle = opendir($lbpconfigdir)) {
+    while (false !== ($entry = readdir($handle))) {
+        if ($entry != "." && $entry != "..") {
+          // read cfg file
+          $file = $lbpconfigdir. '/'. $entry;
+          $cfg = new Config_Lite("$file");
+          $device=$cfg->get(null,"device");
+          echo '<p>'; ?> <?=$L['GATEWAYS.DEVICE']?> <?php echo ': '. $device. '</p>';
+ 
+          $speed=$cfg->get(null,"speed");
+          $mode=$cfg->get(null,"mode");
+          $control=$cfg->get(null,"control");
+          $port=$cfg->get(null,"port");
+          $maxconn=$cfg->get(null,"maxconn");
+          $timeout=$cfg->get(null,"timeout");
+          $retries=$cfg->get(null,"retries");
+          $pause=$cfg->get(null,"pause");
+          $wait=$cfg->get(null,"wait");
+          echo '<p>'. $speed. ' '. $mode. ' '. $control. ' '. $port. ' '. $maxconn. ' '. $timeout. ' '. $retries. ' '. $pause. ' '. $wait. '</p>';
+        }
+    }
+    closedir($handle);
+}
+?>
+</tbody>
+</table>
 <p><a href='new.php'><?=$L['GATEWAYS.NEW']?></a></p>
 
 
@@ -54,3 +96,5 @@ if ($handle = opendir('/dev/serial/by-id')) {
 <?php
 LBWeb::lbfooter();
 ?>
+
+
