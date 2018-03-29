@@ -6,10 +6,8 @@ require_once "Config/Lite.php";
 function zmata_option_set($optval, $value) {
   if ($value == $optval)
     $option = '<option value="'. $optval. '" selected>'. $optval. '</option>';
-//    $option = '<option value="38400" selected>38400</option>';
   else
     $option = '<option value="'. $optval. '">'. $optval. '</option>';
-//    $option = '<option value="38400">38400</option>';
   return $option;
 }
 
