@@ -81,7 +81,7 @@ if ($handle = opendir($lbpconfigdir)) {
           $retries=$cfg->get(null,"retries");
           $pause=$cfg->get(null,"pause");
           $wait=$cfg->get(null,"wait");
-          echo '<p>'. $speed. ' '. $mode. ' '. $control. ' '. $port. ' '. $maxconn. ' '. $timeout. ' '. $retries. ' '. $pause. ' '. $wait. '</p>';
+          echo '<p>Parameters: '. $speed. ' '. $mode. ' '. $control. ' '. $port. ' '. $maxconn. ' '. $timeout. ' '. $retries. ' '. $pause. ' '. $wait. '</p>';
         }
     }
     closedir($handle);
