@@ -75,19 +75,18 @@ if ($handle = opendir($lbpconfigdir)) {
           $file = $lbpconfigdir. '/'. $entry;
           $cfg = new Config_Lite("$file");
           $device=$cfg->get(null,"device");
-          $devfile = explode("/",$device);
-          $command = $lbpbindir. '/service.sh status mbusd@'. $devfile[4]. '.service  | grep Active';
+          $devfile_aray = explode("/",$device);
+          $devfile = $devfile_aray[4];
+          $command = $lbpbindir. '/service.sh status mbusd@'. $devfile. '.service  | grep Active';
           $status = shell_exec($command);
           echo '<div class="ui-corner-all ui-shadow">';
           echo '<a href="index.php?gwfile='. $entry. '" class="ui-btn ui-shadow ui-corner-all ui-icon-info ui-btn-icon-notext ui-btn-b ui-btn-inline">'. $L['GATEWAYS.DETAIL'] .'</a>';
           echo '<a href="index.php?action=del&gwfile='. $entry. '" class="ui-btn ui-shadow ui-corner-all ui-icon-delete ui-btn-icon-notext ui-btn-b ui-btn-inline">'. $L['GATEWAYS.DETAIL'] .'</a>';
-          echo '<a href="index.php?gwfile='. $entry. '" data-role="button" data-inline="true" data-mini="true">'. $device .'</a>';
-          echo $L['GATEWAYS.STATUS'];
-          $statshort = substr($status,3,15);
+          echo '<a href="index.php?gwfile='. $entry. '" data-role="button" data-inline="true" data-mini="true">'. $devfile .'</a>';
           if (substr($status,3,15) == 'Active: inactiv')
-            echo '<a href="service.php?action=start&devfile='. $devfile[4]. '" data-role="button" data-inline="true" data-mini="true">'. $L['GATEWAYS.START'] .'</a>';
+            echo '<a href="service.php?action=start&devfile='. $devfile. '" data-role="button" data-inline="true" data-mini="true">'. $L['GATEWAYS.START'] .'</a>';
           elseif (substr($status,3,15) == 'Active: active ') 
-            echo '<a href="service.php?action=stop&devfile='. $devfile[4]. '" data-role="button" data-inline="true" data-mini="true">'. $L['GATEWAYS.STOP'] .'</a>';
+            echo '<a href="service.php?action=stop&devfile='. $devfile. '" data-role="button" data-inline="true" data-mini="true">'. $L['GATEWAYS.STOP'] .'</a>';
           else
             echo $status;
           echo '</div>';
@@ -107,8 +106,10 @@ echo '<p class="wide">'. $L['GWDETAIL.HEAD']. '</p>';
           $file = $lbpconfigdir. '/'. $gwfile;
           $cfg = new Config_Lite("$file");
           $device=$cfg->get(null,"device");
+          $devfile_aray = explode("/",$device);
+          $devfile = $devfile_aray[4];
           echo '<div>';
-          echo '<p>'; ?> <?=$L['GATEWAYS.DEVICE']?> <?php echo ': '. $device. '</p>';
+          echo '<p><b>'; ?> <?=$L['GATEWAYS.DEVICE']?> <?php echo ': '. $devfile. '</b></p>';
  
           $speed=$cfg->get(null,"speed");
           $mode=$cfg->get(null,"mode");
