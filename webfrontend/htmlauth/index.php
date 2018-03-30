@@ -29,9 +29,25 @@ $navbar[1]['active'] = True;
 
 LBWeb::lbheader($template_title, $helplink, $helptemplate);
 
-if ($_GET['action'] == 'new') {
-//NEW  
+//SUBMIT
+if ($_POST['submit']) {
+  $file = $lbpconfigdir. '/'. $_GET['gwfile'];
+  $cfg = new Config_Lite("$file");
+  $cfg->setQuoteStrings(False);
+  $cfg->set(null,"speed",$_POST['speed']);
+  $cfg->set(null,"mode",$_POST['mode']);
+  $cfg->set(null,"trx_control",$_POST['trx_control']);
+  $cfg->set(null,"port",$_POST['port']);
+  $cfg->set(null,"maxconn",$_POST['maxconn']);
+  $cfg->set(null,"timeout",$_POST['timeout']);
+  $cfg->set(null,"retries",$_POST['retries']);
+  $cfg->set(null,"pause",$_POST['pause']);
+  $cfg->set(null,"wait",$_POST['wait']);  
+  $cfg->save();
+}
 
+//NEW
+if ($_GET['action'] == 'new') {
   echo '<p class="wide">'. $L['GWNEW.HEAD']. '</p>';
   echo '<p>'. $L['GWNEW.TEXT']. '</p>';
   if ($handle = opendir('/dev/serial/by-id')) {
@@ -48,6 +64,7 @@ if ($_GET['action'] == 'new') {
   }
 
 }
+
 //DEL
 elseif ($_GET['action'] == 'del') {
   echo '<p class="wide">'. $L['GWDEL.HEAD']. '</p>';
@@ -56,6 +73,7 @@ elseif ($_GET['action'] == 'del') {
   echo '<a href="index.php?gwfile='. $_GET['gwfile']. '" data-role="button" data-inline="true" data-mini="true">'. $L['GWDEL.RETURN'] .'</a></div>';
 }
 else {
+
 //MAIN
 ?>
 <p><?=$L['MAIN.INTRO1']?></p>
@@ -100,6 +118,7 @@ if ($handle = opendir($lbpconfigdir)) {
 <br>
 <br>
 <?php
+
 //DETAILS
 echo '<p class="wide">'. $L['GWDETAIL.HEAD']. '</p>';
           // read cfg file
@@ -121,7 +140,7 @@ echo '<p class="wide">'. $L['GWDETAIL.HEAD']. '</p>';
           $pause=$cfg->get(null,"pause");
           $wait=$cfg->get(null,"wait");
 ?>
-          <form>
+          <form action=<?php echo 'index.php?gwfile='. $gwfile; ?> method="post">
               <label for="speed"><?=$L['GWDETAIL.SPEED1']?> <i>(<?=$L['GWDETAIL.SPEED2']?>)</i></label>
               <select data-inline="true" data-mini="true" name="speed" id="speed">
             <?php echo zmata_option_set("1200", $speed);
@@ -154,6 +173,7 @@ echo '<p class="wide">'. $L['GWDETAIL.HEAD']. '</p>';
             <?php echo '<input data-inline="true" data-mini="true" name="pause" id="pause" placeholder="Text input" value='.$pause. ' type="text">'; ?>
                   <label for="wait"><?=$L['GWDETAIL.WAIT1']?> <i>(<?=$L['GWDETAIL.WAIT2']?>)</i></label>
             <?php echo '<input data-inline="true" data-mini="true" name="wait" id="wait" placeholder="Text input" value='. $wait. ' type="text">'; ?>
+                  <input data-role="button" data-inline="true" data-mini="true" type="submit" name="submit" value=<?=$L['GWDETAIL.SUBMIT']?>>
           </form>
 <?php
           echo '</div>';
