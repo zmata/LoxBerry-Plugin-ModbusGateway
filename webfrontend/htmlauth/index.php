@@ -62,7 +62,7 @@ else {
 <br>
 
 <?php
-  //GATEWAYS
+//GATEWAYS
 echo '<p class="wide">'. $L['GATEWAYS.HEAD']. '</p>';
 echo '<a href="index.php?action=new'. '" data-role="button" data-inline="true" data-mini="true" data-icon="plus">'. $L['GATEWAYS.NEW']. '</a>';
 if ($_GET['gwfile'])
@@ -75,10 +75,14 @@ if ($handle = opendir($lbpconfigdir)) {
           $file = $lbpconfigdir. '/'. $entry;
           $cfg = new Config_Lite("$file");
           $device=$cfg->get(null,"device");
+          $devfile = explode("/",$device);
+          $service = 'mbusd@'. $devfile[3];
+//          $output = shell_exec('ls -lart');
           echo '<div class="ui-corner-all ui-shadow">';
           echo '<a href="index.php?gwfile='. $entry. '" class="ui-btn ui-shadow ui-corner-all ui-icon-info ui-btn-icon-notext ui-btn-b ui-btn-inline">'. $L['GATEWAYS.DETAIL'] .'</a>';
           echo '<a href="index.php?action=del&gwfile='. $entry. '" class="ui-btn ui-shadow ui-corner-all ui-icon-delete ui-btn-icon-notext ui-btn-b ui-btn-inline">'. $L['GATEWAYS.DETAIL'] .'</a>';
-          echo '<a href="index.php?gwfile='. $entry. '" data-role="button" data-inline="true" data-mini="true">'. $device .'</a></div>';
+          echo '<a href="index.php?gwfile='. $entry. '" data-role="button" data-inline="true" data-mini="true">'. $device .'</a>';
+          echo '</div>';
           if (!$gwfile)
             $gwfile = $entry;
         }
