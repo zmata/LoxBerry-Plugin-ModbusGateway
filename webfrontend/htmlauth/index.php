@@ -76,12 +76,20 @@ if ($handle = opendir($lbpconfigdir)) {
           $cfg = new Config_Lite("$file");
           $device=$cfg->get(null,"device");
           $devfile = explode("/",$device);
-          $service = 'mbusd@'. $devfile[3];
-//          $output = shell_exec('ls -lart');
+          $command = $lbpbindir. '/service.sh status mbusd@'. $devfile[4]. '.service  | grep Active';
+          $status = shell_exec($command);
           echo '<div class="ui-corner-all ui-shadow">';
           echo '<a href="index.php?gwfile='. $entry. '" class="ui-btn ui-shadow ui-corner-all ui-icon-info ui-btn-icon-notext ui-btn-b ui-btn-inline">'. $L['GATEWAYS.DETAIL'] .'</a>';
           echo '<a href="index.php?action=del&gwfile='. $entry. '" class="ui-btn ui-shadow ui-corner-all ui-icon-delete ui-btn-icon-notext ui-btn-b ui-btn-inline">'. $L['GATEWAYS.DETAIL'] .'</a>';
           echo '<a href="index.php?gwfile='. $entry. '" data-role="button" data-inline="true" data-mini="true">'. $device .'</a>';
+          echo $L['GATEWAYS.STATUS'];
+          $statshort = substr($status,3,15);
+          if (substr($status,3,15) == 'Active: inactiv')
+            echo '<a href="service.php?action=start&devfile='. $devfile[4]. '" data-role="button" data-inline="true" data-mini="true">'. $L['GATEWAYS.START'] .'</a>';
+          elseif (substr($status,3,15) == 'Active: active ') 
+            echo '<a href="service.php?action=stop&devfile='. $devfile[4]. '" data-role="button" data-inline="true" data-mini="true">'. $L['GATEWAYS.STOP'] .'</a>';
+          else
+            echo $status;
           echo '</div>';
           if (!$gwfile)
             $gwfile = $entry;
