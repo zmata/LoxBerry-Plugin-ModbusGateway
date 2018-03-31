@@ -6,7 +6,7 @@ require_once "Config/Lite.php";
 $L = LBWeb::readlanguage("language.ini");
 
 $template_title = "Modbus Gateway";
-$helplink = "http://www.loxwiki.eu:80/x/_wFmAQ";
+$helplink = "http://www.loxwiki.eu/display/LOXBERRY/Modbus+Gateway";
 $helptemplate = "pluginhelp.html";
 
 $navbar[1]['Name'] = $L['NAVBAR.FIRST'];
