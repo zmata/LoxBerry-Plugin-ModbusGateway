@@ -45,19 +45,26 @@ PCONFIG=$LBPCONFIG/$PDIR
 PSBIN=$LBPSBIN/$PDIR
 PBIN=$LBPBIN/$PDIR
 
-echo "<INFO> Command is: $COMMAND"
-echo "<INFO> Temporary folder is: $TEMPDIR"
-echo "<INFO> (Short) Name is: $PSHNAME"
-echo "<INFO> Installation folder is: $ARGV3"
-echo "<INFO> Plugin version is: $ARGV4"
-echo "<INFO> Plugin CGI folder is: $PCGI"
-echo "<INFO> Plugin HTML folder is: $PHTML"
-echo "<INFO> Plugin Template folder is: $PTEMPL"
-echo "<INFO> Plugin Data folder is: $PDATA"
-echo "<INFO> Plugin Log folder (on RAMDISK!) is: $PLOG"
-echo "<INFO> Plugin CONFIG folder is: $PCONFIG"
-echo "<INFO> Creating temporary folders for upgrading"
+# To use important variables from command line use the following code:
+ARGV0=$0 # Zero argument is shell command
+# echo "<INFO> Command is: $ARGV0"
 
+ARGV1=$1 # First argument is temp folder during install
+# echo "<INFO> Temporary folder is: $ARGV1"
+
+ARGV2=$2 # Second argument is Plugin-Name for scipts etc.
+# echo "<INFO> (Short) Name is: $ARGV2"
+
+ARGV3=$3 # Third argument is Plugin installation folder
+# echo "<INFO> Installation folder is: $ARGV3"
+
+ARGV4=$4 # Forth argument is Plugin version
+# echo "<INFO> Installation folder is: $ARGV4"
+
+ARGV5=$5 # Fifth argument is Base folder of LoxBerry
+# echo "<INFO> Base folder is: $ARGV5"
+
+echo "<INFO> Creating temporary folders for upgrading"
 mkdir -p /tmp/$ARGV1\_upgrade
 mkdir -p /tmp/$ARGV1\_upgrade/config
 mkdir -p /tmp/$ARGV1\_upgrade/log
