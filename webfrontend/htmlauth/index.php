@@ -70,9 +70,15 @@ if ($_GET['action'] == 'new') {
 //DEL
 elseif ($_GET['action'] == 'del') {
   echo '<p class="wide">'. $L['GWDEL.HEAD']. '</p>';
-  echo '<p>'. $L['GWDEL.TEXT']. $_GET['gwfile']. '</p>';
-  echo '<a href="del.php?gwfile='. $_GET['gwfile']. '" data-role="button" data-inline="true" data-mini="true">'. $L['GWDEL.DELETE'] .'</a>';
-  echo '<a href="index.php?gwfile='. $_GET['gwfile']. '" data-role="button" data-inline="true" data-mini="true">'. $L['GWDEL.RETURN'] .'</a></div>';
+  if ($_GET['stat'] == 'inacti') {
+    echo '<p>'. $L['GWDEL.TEXT']. $_GET['gwfile']. '</p>';
+    echo '<a href="del.php?gwfile='. $_GET['gwfile']. '" data-role="button" data-inline="true" data-mini="true">'. $L['GWDEL.DELETE'] .'</a>';
+    echo '<a href="index.php?gwfile='. $_GET['gwfile']. '" data-role="button" data-inline="true" data-mini="true">'. $L['GWDEL.RETURN1'] .'</a></div>';
+  }
+  else {
+    echo '<p>'. $L['GWDEL.ACTIVE']. '</p>';
+    echo '<a href="index.php?gwfile='. $_GET['gwfile']. '" data-role="button" data-inline="true" data-mini="true">'. $L['GWDEL.RETURN2'] .'</a></div>';
+  }
 }
 else {
 
@@ -99,11 +105,12 @@ if ($handle = opendir($lbpconfigdir)) {
           $devfile = $devfile_aray[4];
           $command = $lbpbindir. '/service.sh status mbusd@'. $devfile. '.service  | grep Active';
           $status = shell_exec($command);
+          $stat = substr($status,11,6);
           echo '<div class="ui-corner-all ui-shadow">';
           echo '<a href="index.php?gwfile='. $entry. '" class="ui-btn ui-shadow ui-corner-all ui-icon-info ui-btn-icon-notext ui-btn-b ui-btn-inline">'. $L['GATEWAYS.DETAIL'] .'</a>';
-          echo '<a href="index.php?action=del&gwfile='. $entry. '" class="ui-btn ui-shadow ui-corner-all ui-icon-delete ui-btn-icon-notext ui-btn-b ui-btn-inline">'. $L['GATEWAYS.DETAIL'] .'</a>';
+          echo '<a href="index.php?action=del&gwfile='. $entry. '&stat='. $stat. '" class="ui-btn ui-shadow ui-corner-all ui-icon-delete ui-btn-icon-notext ui-btn-b ui-btn-inline">'. $L['GATEWAYS.DETAIL'] .'</a>';
           echo '<a href="index.php?gwfile='. $entry. '" data-role="button" data-inline="true" data-mini="true">'. $devfile .'</a>';
-          if (substr($status,3,15) == 'Active: inactiv')
+          if (substr($status,3,16) == 'Active: inactive')
             echo '<a href="service.php?action=start&devfile='. $devfile. '" data-role="button" data-inline="true" data-mini="true">'. $L['GATEWAYS.START'] .'</a>';
           elseif (substr($status,3,15) == 'Active: active ') 
             echo '<a href="service.php?action=stop&devfile='. $devfile. '" data-role="button" data-inline="true" data-mini="true">'. $L['GATEWAYS.STOP'] .'</a>';
