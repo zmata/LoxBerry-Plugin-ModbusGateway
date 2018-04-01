@@ -71,7 +71,7 @@ if ($_GET['action'] == 'new') {
 elseif ($_GET['action'] == 'del') {
   echo '<p class="wide">'. $L['GWDEL.HEAD']. '</p>';
   if ($_GET['stat'] == 'inacti') {
-    echo '<p>'. $L['GWDEL.TEXT']. $_GET['gwfile']. '</p>';
+    echo '<p>'. $L['GWDEL.TEXT']. ' '. $_GET['gwfile']. '</p>';
     echo '<a href="del.php?gwfile='. $_GET['gwfile']. '" data-role="button" data-inline="true" data-mini="true">'. $L['GWDEL.DELETE'] .'</a>';
     echo '<a href="index.php?gwfile='. $_GET['gwfile']. '" data-role="button" data-inline="true" data-mini="true">'. $L['GWDEL.RETURN1'] .'</a></div>';
   }
