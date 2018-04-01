@@ -14,7 +14,9 @@ function zmata_option_set($optval, $value) {
 $L = LBWeb::readlanguage("language.ini");
 
 $template_title = "Modbus Gateway";
-$helplink = "http://www.loxwiki.eu/display/LOXBERRY/Modbus+Gateway";
+//$helplink = "http://www.loxwiki.eu/display/LOXBERRY/Modbus+Gateway";
+$helplink = $L['LINKS.WIKI'];
+
 $helptemplate = "pluginhelp.html";
 
 $navbar[1]['Name'] = $L['NAVBAR.FIRST'];
