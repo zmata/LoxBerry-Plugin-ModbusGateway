@@ -17,7 +17,7 @@ $navbar[2]['URL'] = 'log.php';
 
 
 // NAVBAR
-$navbar[1]['active'] = True;
+$navbar[2]['active'] = True;
 
 LBWeb::lbheader($template_title, $helplink, $helptemplate);
 
@@ -37,3 +37,4 @@ if ($handle = opendir($lbplogdir)) {
 
 LBWeb::lbfooter();
 ?>
+
