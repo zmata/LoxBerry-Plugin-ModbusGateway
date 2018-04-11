@@ -59,10 +59,10 @@ if ($_POST['change']) {
 
 if ($_POST['save_del']) {
   //conf
-  $cfgfile = $lbpconfigdir. '/mbusd-'.  $_POST['device']. 'conf';
+  $cfgfile = $lbpconfigdir. '/mbusd-'.  $_POST['device']. '.conf';
   unlink($cfgfile);
   //cfg
-  $cfgfile = $lbpconfigdir. '/mbusd-'.  $_POST['device']. 'cfg';
+  $cfgfile = $lbpconfigdir. '/mbusd-'.  $_POST['device']. '.cfg';
   unlink($cfgfile);
 
   header ("Location: index.php");
