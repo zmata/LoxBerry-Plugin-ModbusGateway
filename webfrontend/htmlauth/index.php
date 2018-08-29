@@ -77,7 +77,16 @@ LBWeb::lbheader($template_title, $helplink, $helptemplate);
 if ($_POST['req_new']) {
   echo '<p class="wide">'. $L['GWNEW.HEAD']. '</p>';
   echo '<p>'. $L['GWNEW.TEXT']. '</p>';
-  if ($handle = opendir('/dev/serial/by-id')) {
+
+  // read cfg file
+  $filecfg = $lbpconfigdir. '/mbusd.cfg';
+  $cfg = new Config_Lite("$filecfg");
+  $serialpath=$cfg->get(null,"SERIAL");
+  if (!$serialpath) {
+    $serialpath = '/dev/serial/by-id';
+  }
+
+  if ($handle = opendir($serialpath)) {
     while (false !== ($device = readdir($handle))) {
       if ($device != "." && $device != "..") {
         $file = 'mbusd-'. $device. '.conf';
