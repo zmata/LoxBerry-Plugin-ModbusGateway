@@ -78,12 +78,12 @@ if ($_POST['req_new']) {
   echo '<p class="wide">'. $L['GWNEW.HEAD']. '</p>';
   echo '<p>'. $L['GWNEW.TEXT']. '</p>';
 
-  // read cfg file
-  $filecfg = $lbpconfigdir. '/mbusd.cfg';
-  $cfg = new Config_Lite("$filecfg");
-  $serialpath=$cfg->get(null,"SERIAL");
+  // read cfg global file
+  $serialcfg = $lbpconfigdir. '/mbusd.cfg';
+  $scfg = new Config_Lite("$serialcfg");
+  $serialpath=$scfg->get(null,"SERIAL");
   if (!$serialpath) {
-    $serialpath = '/dev/serial/by-id';
+    $serialpath = '/dev/serial/by-id/';
   }
 
   if ($handle = opendir($serialpath)) {
@@ -157,8 +157,10 @@ else {
       echo '<input data-role="button" data-inline="true" data-mini="true" data-icon="check" type="submit" name="req_start" value='. $L['GATEWAYS.START']. '>';
     elseif (substr($cmd,3,15) == 'Active: active ') 
       echo '<input data-role="button" data-inline="true" data-mini="true" data-icon="delete" type="submit" name="req_stop" value='. $L['GATEWAYS.STOP']. '>';
-    else
+    else {
+      echo '<input data-role="button" data-inline="true" data-mini="true" data-icon="check" type="submit" name="req_start" value='. $L['GATEWAYS.START']. '>';
       echo $cmd;
+    }
     echo '</form>';
     echo '</div>';
 

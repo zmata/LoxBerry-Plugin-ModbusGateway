@@ -5,11 +5,11 @@ require_once "Config/Lite.php";
 
 function zmata_conf($confdir, $device, $speed, $mode, $trx_control, $port, $maxconn, $timeout, $retries, $pause, $wait) {
   // read cfg global file
-  $filecfg = $lbpconfigdir. '/mbusd.cfg';
-  $cfg = new Config_Lite("$filecfg");
-  $serialpath=$cfg->get(null,"SERIAL");
+  $serialcfg = $confdir. '/mbusd.cfg';
+  $scfg = new Config_Lite("$serialcfg");
+  $serialpath=$scfg->get(null,"SERIAL");
   if (!$serialpath) {
-    $serialpath = '/dev/serial/by-id';
+    $serialpath = '/dev/serial/by-id/';
   }
   // read conf file
   $file = $confdir. '/mbusd-'. $device. '.conf';
