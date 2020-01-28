@@ -1,6 +1,7 @@
 [Unit]
 Description=Modbus TCP to Modbus RTU (RS-232/485) gateway.
 Requires=network.target
+After=loxberry.service
 
 [Service]
 EnvironmentFile=-/etc/environment
