@@ -134,8 +134,8 @@ else {
   echo '<input data-role="button" data-inline="true" data-mini="true" data-icon="plus" type="submit" name="req_new" value='. $L['GATEWAYS.NEW']. '>';
   echo '</form>';
   
-  if ($_POST['device'])
-    $gwdevice = $_GET['device'];
+  if ($_POST['show_detail'])
+    $gwdevice = $_POST['show_detail'];
 
   $mask = $lbpconfigdir. "/". "*.conf";
   foreach (glob($mask) as $file) {
